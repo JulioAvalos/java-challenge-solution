@@ -1,0 +1,51 @@
+version: '3.5'
+
+# docker compose para subir el monolito a digital ocean
+services: 
+
+    mysql_server:
+        build: 
+            context: ./database
+            dockerfile: Dockerfile
+        container_name: mysql_server
+        ports: 
+            - 3306:3306
+        restart: always
+        networks: 
+            - movies-monolith
+
+    movies-api: 
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile
+        container_name: movies-api
+        restart: always
+        ports: 
+            - 9200:9200
+        depends_on: 
+            - mysql_server
+        links: 
+            - mysql_server
+        networks: 
+            - movies-monolith
+        restart: on-failure
+        entrypoint: dockerize -wait tcp://mysql_server:3306 -timeout 10m java -jar /workspace/app.jar --spring.profiles.active=prod --host="mysql_server" --port="3306" --database="moviesdb" --username="root" --password="toor" 
+
+    frontend:
+        build: 
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: frontend-movies
+        ports: 
+            - 4000:4000
+        depends_on: 
+            - movies-api
+        links: 
+            - movies-api
+        networks: 
+            - movies-monolith
+
+networks:
+    movies-monolith:
+        driver: "bridge"
+

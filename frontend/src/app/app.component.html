@@ -1,0 +1,55 @@
+<div class="example-container" *ngIf=true>
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+    <h1 class="example-app-name">Movies App</h1>
+    <span class="example-spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngIf="!loginService.isLogged()" routerLink="/login">
+        <mat-icon>vpn_key</mat-icon>
+        <span>Login</span>
+      </button>
+      <div *ngIf="loginService.isLogged()">
+        <button mat-menu-item>
+          <mat-icon>account_box</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item (click)="sidenav.opened = false" (click)="loginService.logOut()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #sidenav style="width: 200px">
+      <img
+        src="https://library.kissclipart.com/20180828/kzw/kissclipart-ticket-icon-clipart-event-tickets-computer-icons-c-e98bc77b0503d0ef.png"
+        width="128" style="margin-left: 20px;
+            border-top-left-radius: 50% 50%;border-top-right-radius: 50% 50%;border-bottom-right-radius: 50% 50%; border-bottom-left-radius: 50% 50%;
+            background-color: white;" alt="movie logo">
+      <button mat-menu-item (click)="sidenav.toggle()" routerLink="/" style="cursor: pointer">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="sidenav.toggle()" routerLink="/movies" style="cursor: pointer">
+        <mat-icon>movie</mat-icon>
+        <span>Movies</span>
+      </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
+<div class="example-container" *ngIf=false>
+  <app-login></app-login>
+</div>

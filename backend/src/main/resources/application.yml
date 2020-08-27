@@ -1,0 +1,55 @@
+movie:
+  penaltyfee: 1.50
+  returnDays: 3
+  apiVersion: v1
+
+logging:
+  level:
+    #    root: error
+    com.applaudo.movies.services: info
+  file:
+    name: movies-app.log
+
+server:
+  ssl:
+    enable: true
+    key-store: classpath:ssl-server.jks
+    key-store-password: mypassword
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json
+    min-response-size: 4096
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    serialization:
+      indent_output: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sample@yourmail.com
+    password: DEFAULT_LOL!
+    properties.mail.stml:
+      auth: true
+      connectiontimeout: 5000
+      timeout: 5000
+      writetimeout: 5000
+      starttls.enable: true
+
+security:
+  oauth2.resource.filter-order: 3
+  signing-key: Z6tO9eN6rE9rx14
+  encoding-strength: 256
+  security-realm: Applaudo Movies JWT
+  jwt:
+    client-id: moviesapp
+    client-secret: m0v1Es_4pp20
+    grant-type: password
+    scope-read: read
+    scope-write: write
+    resource-ids: moviesappresourceid

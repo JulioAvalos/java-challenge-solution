@@ -1,0 +1,16 @@
+server:
+  port: 9200
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${host}:${port}/${database}
+    username: ${username}
+    password: ${password}
+    initialization-mode: never
+  jpa:
+    database: mysql
+    hibernate.ddl-auto: update
+    generate-ddl: false
+    show-sql: false
+
