@@ -1,4 +1,4 @@
-# Technical Test for Java Developer Position - [-----------]
+# Technical Test for Java Developer Position - [Applaudo Studios]
 
 **Version 1.0.0**
 
